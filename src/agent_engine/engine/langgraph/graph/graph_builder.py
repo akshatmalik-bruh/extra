@@ -256,9 +256,15 @@ class GraphBuilder:
         for tool_spec in spec.tools:
             function = self._tool_loader.load(tool_spec.id)
             if inspect.iscoroutinefunction(function):
-                tools.append(StructuredTool.from_function(coroutine=function, description=tool_spec.description))
+                tools.append(
+                    StructuredTool.from_function(
+                        coroutine=function, description=tool_spec.description
+                    )
+                )
             else:
-                tools.append(StructuredTool.from_function(func=function, description=tool_spec.description))
+                tools.append(
+                    StructuredTool.from_function(func=function, description=tool_spec.description)
+                )
         for mcp in spec.mcps:
             server_tools = self._mcp_tools.get(mcp.id, [])
             tools.extend(server_tools)
